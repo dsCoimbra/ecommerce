@@ -12,6 +12,7 @@ $app = new Slim();
 
 $app->config('debug', true);
 
+/* Index Site */
 $app->get('/', function() {
     
 	$page = new Page();
@@ -20,7 +21,8 @@ $app->get('/', function() {
 
 });
 
-$app->get('/admin', function() {
+/* Index Administrativo */
+$app->get('/admin/', function() {
 
 	User::verifyLogin();
     
@@ -30,6 +32,7 @@ $app->get('/admin', function() {
 
 });
 
+/* Index Login */
 $app->get('/admin/login', function() {
     
 	$page = new PageAdmin([
@@ -41,6 +44,7 @@ $app->get('/admin/login', function() {
 
 });
 
+/* Função Login */
 $app->post('/admin/login', function() {
     
 	User::login($_POST["login"], $_POST["password"]);
@@ -49,6 +53,7 @@ $app->post('/admin/login', function() {
 	exit;
 });
 
+/* Função Sair */
 $app->get('/admin/logout', function() {
     
 	User::logout();
@@ -57,6 +62,7 @@ $app->get('/admin/logout', function() {
 	exit;
 });
 
+/* Index Usuários */
 $app->get('/admin/users', function() {
     
     User::verifyLogin();
@@ -70,6 +76,7 @@ $app->get('/admin/users', function() {
 	));
 });
 
+/* Index Criação de Usuario */
 $app->get('/admin/users/create', function() {
     
     User::verifyLogin();
@@ -81,37 +88,7 @@ $app->get('/admin/users/create', function() {
 
 });
 
-$app->get('/admin/users/:iduser/delete', function($iduser) {
-    
-    User::verifyLogin();
-
-    $user = new User();
-
-    $user->get((int)$iduser);
-
-    $user->delete();
-
-    header("Location: /admin/users");
-
-    exit;
-
-});
-
-$app->get('/admin/users/:iduser', function($iduser) {
-    
-    User::verifyLogin();
-    
-	$user = new User();
-
-	$user->get((int)$iduser);
-
-	$page = new PageAdmin();
-
-	$page->setTpl("users-update", array(
-		"user"=>$user->getValues()
-	));
-});
-
+/* Função Criação de Usuario */
 $app->post('/admin/users/create', function() {
     
     User::verifyLogin();
@@ -129,6 +106,40 @@ $app->post('/admin/users/create', function() {
 
 });
 
+/* Função Delete */
+$app->get('/admin/users/:iduser/delete', function($iduser) {
+    
+    User::verifyLogin();
+
+    $user = new User();
+
+    $user->get((int)$iduser);
+
+    $user->delete();
+
+    header("Location: /admin/users");
+
+    exit;
+
+});
+
+/* Index Edição de Usuário */
+$app->get('/admin/users/:iduser', function($iduser) {
+    
+    User::verifyLogin();
+    
+	$user = new User();
+
+	$user->get((int)$iduser);
+
+	$page = new PageAdmin();
+
+	$page->setTpl("users-update", array(
+		"user"=>$user->getValues()
+	));
+});
+
+/* Função Edição de Usuário */
 $app->post('/admin/users/:iduser', function($iduser) {
     
     User::verifyLogin();
@@ -145,6 +156,37 @@ $app->post('/admin/users/:iduser', function($iduser) {
 
     header("Location: /admin/users");
     exit;
+});
+
+$app->get("/admin/forgot", function(){
+
+	$page = new PageAdmin([
+		"header"=>false,
+		"footer"=>false
+	]);
+
+	$page->setTpl("forgot");
+
+});
+
+$app->post("/admin/forgot", function(){
+
+	$user = User::getForgot($_POST["email"]);
+
+	header("Location: /admin/forgot/sent");
+	exit;
+
+});
+
+$app->get("/admin/forgot/sent", function(){
+
+	$page = new PageAdmin([
+		"header"=>false,
+		"footer"=>false
+	]);
+
+	$page->setTpl("forgot-sent");
+
 });
 
 $app->run();
