@@ -83,7 +83,7 @@ class User extends Model
 		$result = $sql->select("Call sp_users_save(:desperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin)", array(
 			":desperson"=>$this->getdesperson(),
 			":deslogin"=>$this->getdeslogin(),
-			":despassword"=>$this->getdespassword(),
+			":despassword"=>password_hash($this->getdespassword(), PASSWORD_DEFAULT, ["cost"=>12]),
 			":desemail"=>$this->getdesemail(),
 			":nrphone"=>$this->getnrphone(),
 			":inadmin"=>$this->getinadmin()
@@ -209,6 +209,28 @@ class User extends Model
              return $results[0];
          }
      }
+
+     public static function setFogotUsed($idrecovery)
+     {
+
+     	$sql = new Sql();
+
+     	$sql->query("UPDATE tb_userspasswordsrecoveries SET dtrecovery = NOW() WHERE idrecovery = :idrecovery", array(
+     		":idrecovery"=>$idrecovery
+     	));
+     }
+
+     public function setPassword($password)
+     {
+
+     	$sql = new Sql();
+
+     	$sql->query("UPDATE tb_users SET despassword = :password WHERE iduser = :iduser", array(
+     		":password"=>$password,
+     		":iduser"=>$this->getiduser()
+     	));
+     }
+
 }
 
  ?>

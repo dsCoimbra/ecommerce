@@ -38,7 +38,7 @@ class Mailer
 
 		$this->mail->isSmtp();
 
-		$this->mail->SMTPDebug = 0;
+		$this->mail->SMTPDebug = 1;
 
 		$this->mail->Debugoutput = 'html';
 
