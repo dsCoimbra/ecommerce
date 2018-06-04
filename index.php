@@ -281,7 +281,9 @@ $app->get("/admin/categories/:idcategory/delete", function($idcategory){
 	header("Location: /admin/categories");
 	exit;
 
-});$app->get("/admin/categories/:idcategory", function($idcategory){
+})
+
+;$app->get("/admin/categories/:idcategory", function($idcategory){
 
 	User::verifyLogin();
 
@@ -313,6 +315,20 @@ $app->post('/admin/categories/:idcategory', function($idcategory) {
     exit;
 });
 
+$app->get("/categories/:idcategory", function($idcategory){
+
+	$category = new Category();
+
+	$category->get((int)$idcategory);
+
+	$page = new Page();
+
+	$page->setTpl("category", array(
+		"category"=>$category->getValues(),
+		"products"=>[]
+	));
+
+});
 
 $app->run();
 
