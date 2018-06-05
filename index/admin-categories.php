@@ -1,7 +1,7 @@
 <?php 
 
 
-use \Hcode\Page;
+use \Hcode\PageAdmin;
 use \Hcode\Model\Product;
 use \Hcode\Model\User;
 use \Hcode\Model\Category;
@@ -95,20 +95,21 @@ $app->post('/admin/categories/:idcategory', function($idcategory) {
     exit;
 });
 
-$app->get("/categories/:idcategory", function($idcategory){
+$app->get("/admin/categories/:idcategory/products", function($idcategory){
 
+	User::verifyLogin();
+	
 	$category = new Category();
 
 	$category->get((int)$idcategory);
 
-	$page = new Page();
+	$page = new PageAdmin();
 
-	$page->setTpl("category", array(
+	$page->setTpl("categories-products", array(
 		"category"=>$category->getValues(),
-		"products"=>[]
+		"productsNotRelated"=>$category->getProducts(false),
+		"productsRelated"=>$category->getProducts()
 	));
 
 });
-
-
  ?>
