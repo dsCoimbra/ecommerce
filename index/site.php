@@ -2,6 +2,7 @@
 
 use \Hcode\Page;
 use \Hcode\Model\Product;
+use \Hcode\Model\Category;
 
 
 /* Index Site */
@@ -16,7 +17,7 @@ $app->get('/', function() {
 });
 
 $app->get("/categories/:idcategory", function($idcategory){
-	
+
 	$category = new Category();
 
 	$category->get((int)$idcategory);
@@ -25,7 +26,7 @@ $app->get("/categories/:idcategory", function($idcategory){
 
 	$page->setTpl("category", array(
 		"category"=>$category->getValues(),
-		"products"=>[]
+		"products"=>Product::checkList($category->getProducts())
 	));
 
 });
