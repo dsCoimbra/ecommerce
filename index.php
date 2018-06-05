@@ -15,6 +15,7 @@ require_once("index/admin.php");
 require_once("index/admin-users.php");
 require_once("index/admin-categories.php");
 require_once("index/admin-products.php");
+require_once("index/functions.php");
 
 $app->run();
 

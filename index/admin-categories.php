@@ -1,5 +1,9 @@
 <?php 
 
+
+use \Hcode\Page;
+use \Hcode\Model\Product;
+use \Hcode\Model\User;
 use \Hcode\Model\Category;
 
 /* Página Categorias admin */
