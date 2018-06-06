@@ -45,11 +45,6 @@
                         <li><a href="<?php echo htmlspecialchars( $value1["link"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["page"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a></li>
                         <?php } ?>
 
-                        <li>
-                            <a href="#" aria-label="Next">
-                            <span aria-hidden="true">»</span>
-                            </a>
-                        </li>
                         </ul>
                     </nav>                        
                 </div>
