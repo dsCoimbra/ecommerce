@@ -1,6 +1,7 @@
 <?php 
 
 use \Hcode\Model\User;
+use \Hcode\PageAdmin;
 
 /* Index Criação de Usuario */
 $app->get('/admin/users/create', function() {
