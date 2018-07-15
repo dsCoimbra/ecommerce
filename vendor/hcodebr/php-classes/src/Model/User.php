@@ -293,7 +293,7 @@ class User extends Model
      public static function getError()
      {
 
-       $msg = (isset($_SESSION[User::ERROR]) || $_SESSION[User::ERROR])?$_SESSION[User::ERROR]:'';
+       $msg = (isset($_SESSION[User::ERROR])) ? $_SESSION[User::ERROR] : '';
 
        User::clearError();
 
