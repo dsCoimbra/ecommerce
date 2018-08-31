@@ -385,7 +385,7 @@ class User extends Model
         return $results;
      }
 
-     public static function getPage($page = 1, $itemsPerPage = 8)
+    public static function getPage($page = 1, $itemsPerPage = 8)
     {
         $start = ($page - 1) * $itemsPerPage;
 
